@@ -11,13 +11,14 @@ public class Main extends Application {
     // convenience constants
     public static final String TITLE = "NanoBrowser";
     public static final String DEFAULT_START_PAGE = "http://www.cs.duke.edu/rcd";
+    public static final String LANGUAGE = "English";
 
 
     @Override
     public void start (Stage stage) {
         // create program specific components
-        BrowserModel model = new BrowserModel();
-        BrowserView display = new BrowserView(model, "English");
+        BrowserModel model = new BrowserModel(LANGUAGE);
+        BrowserView display = new BrowserView(model, LANGUAGE);
         // give the window a title
         stage.setTitle(TITLE);
         // add our user interface components to Frame and show it

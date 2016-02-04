@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 
 /**
@@ -21,13 +22,15 @@ public class BrowserModel {
     private int myCurrentIndex;
     private List<URL> myHistory;
     private Map<String, URL> myFavorites;
+    private ResourceBundle myResources;
 
 
     /**
      * Creates an empty model.
      */
-    public BrowserModel () {
+    public BrowserModel (String language) {
         myHome = null;
+        myResources = ResourceBundle.getBundle(BrowserView.DEFAULT_RESOURCE_PACKAGE + language+"Error");
         myCurrentURL = null;
         myCurrentIndex = -1;
         myHistory = new ArrayList<>();
@@ -58,8 +61,9 @@ public class BrowserModel {
 
     /**
      * Changes current page to given URL, removing next history.
+     * @throws BrowserException 
      */
-    public URL go (String url) {
+    public URL go (String url) throws BrowserException {
         try {
             URL tmp = completeURL(url);
             // unfortunately, completeURL may not have returned a valid URL, so test it
@@ -76,7 +80,7 @@ public class BrowserModel {
             return myCurrentURL;
         }
         catch (Exception e) {
-            return null;
+            throw new BrowserException(String.format(myResources.getString("ErrorLoad"),url));           
         }
     }
 
